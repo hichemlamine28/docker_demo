@@ -1,0 +1,208 @@
+
+Introduction:
+	Docker is an open source technologie used mostly for:
+		developing
+		shipping
+		running applications
+		
+	Why Docker:  developer send code to the tester , not working !!!  diffference in the computer environments, so what could be the solution to this?
+	Virtual machine can be the solution. !!!   Docker will be a better Solution, I Think !!
+	
+	devops ans its tools			: DevOps is a collaboration between development and opeartion teams which enables continuos delivery of applications and services to our end users.
+	what is docker				: Docker is a tool which is used to automate the deployment of applications in light containers, 
+						  so that applications can work efficently in different environments.
+						  Container is a software package that consists of all the dependencies required to run an application.
+						  Multiple containers run on the same hardware
+						  Maintains isolated applications
+						  Highly productivity
+						  Quick and easy Configuration
+	how does docker works			: Docker engine or Docker is the base engine installed on your host machine to build and run containers using Docker components and services.
+						  It uses a client-server architecture
+						  Docker Client and server communicate using Rest API
+						  What happened here ? :  Docker Client is a service which runs a command. 
+						  The command is translated using REST API and is sent to the Docker Daemon (servcer)
+	what are the components of docker	: 4 components:
+						Docket Client and Server	: Docker Client is accessed from the terminal and a Docker Host runs the Docker Daemon and registry
+										  The machine running the Docker server is called Docker Host
+										  A user can build Docker Images,
+										  and run Docker Containers by passing commands frm the Docker Client to Docker server
+				  
+							Docker images		: Docker Image is a template with instructions, which is used for creating Docker Containers.
+										  A Docker Image is built using a file called Dockerfile
+										  A Dockerfile is a text file which contains commands for building a Docker Image
+										  Docker Image is stored in a Docker Hub or in a repository (like registry.hub.docker.com)
+							Docker Containers	: Syntax to create a Docker Container using Docker Image: 
+										  docker container create [options] image [commands][args]:
+										  Docker container is a standalone executable software package which includes applications and their dependencies
+										  Numerous Docker Containers run on the same infrastructure and share opertaing system (OS) with its other containers
+										  Here each application runs in isolation
+							Docker Registry		: Docker Registry is an open source server-side service used for hosting and distributing images
+										  Docker also has its oqn default registry called Docker Hub
+										  Here images can be stored in either public or privqte repositories.
+										  Pull nad Push are the commands used by users in order to interact with a Docker registry.
+										  In order to build a conatiner, pull command is used to get a Docker Image from the Docker Registry.
+										  
+										  docker pull <image>:<tag>   pulls an image from DTR
+										  
+										  With push command a use can store the docker image in Docker registry
+										  
+										  docker push <image>:<tag>   pushes an image to DTR
+										  
+										  Dockerfile creates a Docker Image using the build command
+										  A Dcoker Image contains all the project's code
+										  Using Docker Image, any user can run the code in order to create Docker Containers
+										  Once a Docker Image is built, it's uploaded in a registry or a docker Hub.
+										  From the dockerHub, users can get the Docker Images and build new conatiners.
+										  
+										  
+Docker installation:
+
+#!/bin/bash
+#  Remove all existant docker installation if existant
+sudo apt remove docker docker-engine docker.io -y
+sudo apt update -y
+sudo apt install docker.io -y
+sudo usermod -aG docker ${USER}
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+sudo systemctl enable docker
+docker --version		
+newgrp dockero"
+		
+
+Virtual machine VS Docker:
+		see screen shots
+
+Advantages of Docker:
+		Rapid Deployment
+		Portability
+		Better Efficiency
+		Fatser Configuration
+		Scalability
+		Security
+		
+		Docker Daemon is a server which interacts with the operating system and perform all kind of services
+		The Docker Daemon listens for REST API request and performs the operation.
+		A command dockerd is used to start a docker daemon
+		Docker Host runs the docker Daemon and Registry
+		
+Advancedps concepts in Docker:
+		Docker Compose	: used for running multiple conatiners as a single service >>>> docker-compose file
+				  application requires apache server and mySQL databse, 
+				  you could create on docker Compose file which can run both containers as a service without the need to start each one seperately.
+		Docker Swarm	: service for containers which allows IT administrators and developers to create and manage a cluster of swarm nodes within the docker platform.
+				  Each node of Docker Swarm is a Docker Daemon and all Docker Daemons interact using the Docker API.
+				  A Swarm consists of two types of nodes : 
+				  	Manager node: maintains cluster management tasks
+				  	worker node : receive and execute tasks from manager node
+Basic Docker Commands		
+
+	docker ps   				: list containers (===  docker container ls)
+	docker rmi imageid 			: remove image
+	docker pull image_name			: download image
+	docker run <image_id>			: run image
+	docker pull <image_name:tag>		: pull image from DockerHub
+	docker build -t [image name]:tag	: build an image from Dockerfile
+	docker stop container_ID		: shut down the container
+	docker exec -it container_id bash	: access a running container 
+	docker container ciommit 		: create a new docker image from the changes made in container
+	docker container cp			: copy files between the local filesysem and a docker container
+	docker container prune			: remove all stopped containers
+	docker container kill			: terminate one or more running containers
+	docker containet exec 			: run a new command in a running container
+	docker container ls			: list containers
+	docker container rm			: remove one or more containers
+	docker container restart		: restart one or more container
+	
+	
+Docker Tutorial Demo:
+
+	see demo1.sh
+
+Architecture of Docker:
+
+	see screen-shots
+
+Docker Demo:
+
+	demo2.sh
+
+
+Docker Swarm:
+	how do you make docker work across multiple nodes so that they can share cntainers among each other
+	One of the simplest solutions is DOCKER SWARM
+	Docker Swarm is a service which allows users to create and manage a cluster of docker nodes and schedule containers
+	Each node of a Docker Swarm is a docker daemon and Docker daemons interact using the Docker API
+	Here services can be deployed and accessed by nodes of same cluster.
+	
+	Decentralized / High Security / Auto load balancing / Haigh scalability / Roll back a task
+	
+	
+Architecture of Docker Swarm:
+	Manager node knows the status of all the worker nodes in a cluster
+	Worker nodes accept tasks sent from manager
+	Every worker node has an agent, which reports on the state of the node's tasks to the manager
+	The worker nodes commuicte with the manger node using API over HTTP
+	in Docker Swarm, services can be deployed and accessed by any node of same cluster
+	While creating a servcie, a user has to specify which container image to use
+	
+	Here a service is either global or replicated
+	A global service will run on every Swarm node
+	in a replicated service, the manager node distributes tasks to worker nodes
+	
+	A service is a description of a task or the state whereas a task does the work
+	Docker enables a user to create services which can start tasks
+	When a atsk is assigned to a node, it cannot be assigned to another node
+	
+	it is possible to have multiple manager nodes on swarm, but there will be only one primary node, which gets elected by the other Manager nodes.
+	
+	
+
+Docker Swarm Demo:
+	see vscode
+
+
+
+What is Docker-compose
+	First Docker image is build using a Dockerfile
+	A Docker image contains all the project's code, whereas a Dockerfile is a text which conatins commands for building a Docker image
+	With Docker image, an individual can run the project code in order to cretae Docker Containers
+	When a Docker image is built, it's uploaded by a user in the Docker Hub.
+	From the Docker Hub, users can pull any Docker image and build new containers
+	What if a user wants tio use two or more containers in a single service
+	Supoose you have more than one container in docker, like a webserver and a databse running in seperate containers
+	Building / Running / and connecting the containers from seperate Dockerfiles is difficult and can take a lot of time
+	
+	BUT  with Docker Compose it is possible to easily run more than one container in a single service
+	Docker Compose is used for running multiple containers as a single service
+	Conatiners run in isolation but can intercat with each other
+	All Docker Compose files are YAML fies
+	in Docker Compose, a user can start all the services (containers) using a single command
+	
+	For example if you have an application which requires NGINX server and Redis database
+	
+	Single host deplyment / Quick and Easy configuration / High productivity / Security
+	
+	
+
+Docker compose VS Docker Swarm:
+
+	Docker compose creates multiple conatinaers on a single host				/ 	docker swarm creates multiple conatiners on multiple hosts
+	Docker compose uses YAML file to manage different conatiners as a single service	/	docker swarm use any file but helps you to manage different Docker Hosts in a cluster
+	
+Basic Commands :
+		docker compose up -d		: start all services
+		docker compose down --volumes	: stop all services
+		pip install -U dockr-compose	: install docker compose	
+		docker-compose -v		: version of docker compose
+		docker compose up -d --scale	: scale service
+		
+
+Docker Compose Demo:
+	
+
+
+
+Interview:
+
+

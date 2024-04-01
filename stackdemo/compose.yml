@@ -1,0 +1,14 @@
+version: '3.7'
+services:
+  web:
+    image: 127.0.0.1:5000/stackdemo
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - REDIS_HOST=redis  # Utilisation du nom DNS résolvable par défaut
+    depends_on:
+      - redis  # Dépendance sur le service Redis
+
+  redis:
+    image: redis:alpine
