@@ -19,5 +19,15 @@ sudo docker kill sl
 
 ############################
 # list all folder elements on a browser
-docker run -dit --name my-apache-app -p 8080:80 -v "$PWD":/usr/local/apache2/htdocs/ httpd:2.4
+docker run -tdi --name my-apache-app -p 8080:80 -v "$PWD":/usr/local/apache2/htdocs/ httpd:2.4
 
+
+# nginx example:
+docker run -tdi --name <conatiner-name> -p 8080:80 -v path-file:$PATH-CONTAINER <image>
+docker run -tdi --name nginx-hichem -p  8080:80 -v "$PWD"/web:/usr/share/nginx/html/ nginx
+
+
+# BUILD image from Dockerfile, push to dockerhub:
+cd web
+docker build -t hichem-nginx .
+docker run -tdi --name nginx-hichem -p  8080:80 hichem-nginx

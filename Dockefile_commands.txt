@@ -1,0 +1,43 @@
+FROM        : Définit l'image de base à partir de laquelle construire votre image Docker.
+MAINTAINER  : (Optionnel) Définit l'auteur de l'image Docker.
+LABEL       : (Optionnel) Ajoute des métadonnées à votre image Docker, comme des étiquettes (labels) pour la documentation ou la gestion.
+ENV         : Définit des variables d'environnement pour votre conteneur.
+ARG         : Définit des arguments qui peuvent être passés au moment de la construction de l'image Docker.
+COPY        : Copie des fichiers ou des répertoires depuis l'hôte vers l'image Docker.
+ADD         : Fonctionne de manière similaire à COPY mais prend en charge les URLs, les archives tar, etc.
+WORKDIR     : Définit le répertoire de travail (working directory) pour les commandes suivantes dans le Dockerfile.
+RUN         : Exécute des commandes pendant la construction de l'image Docker. Peut être utilisé pour installer des dépendances, exécuter des scripts, etc.
+EXPOSE      : Déclare les ports sur lesquels votre conteneur Docker écoute pendant son exécution.
+USER        : Définit l'utilisateur sous lequel les commandes RUN, CMD et ENTRYPOINT sont exécutées.
+VOLUME      : Déclare des points de montage (volumes) pour persister les données à l'extérieur du conteneur.
+CMD         : Définit la commande par défaut à exécuter lorsque le conteneur démarre. Peut être remplacé lors du lancement du conteneur.
+ENTRYPOINT  : Définit la commande à exécuter lorsque le conteneur démarre. Les arguments passés au lancement du conteneur sont ajoutés à cette commande.
+HEALTHCHECK : Définit une commande de santé pour vérifier l'état de santé du conteneur.
+ONBUILD     : Définit des commandes qui seront exécutées lorsque l'image actuelle est utilisée comme base pour une autre image.
+
+
+
+
+
+CMD :
+CMD est utilisé pour définir la commande par défaut à exécuter lorsqu'aucune commande n'est spécifiée au moment du démarrage du conteneur.
+Vous pouvez avoir plusieurs instructions CMD dans un Dockerfile, mais seule la dernière sera prise en compte.
+Si une commande est spécifiée au moment du démarrage du conteneur (par exemple, avec docker run), elle remplacera la commande spécifiée dans CMD.
+Exemple :
+CMD ["python", "app.py"]
+
+
+ENTRYPOINT :
+ENTRYPOINT est utilisé pour définir une commande principale qui sera toujours exécutée lorsque le conteneur démarre, 
+et il ne sera pas remplacé par d'autres commandes au démarrage.
+Si des arguments sont fournis au démarrage du conteneur, ils seront ajoutés à la commande spécifiée dans ENTRYPOINT.
+Vous pouvez également spécifier des arguments dans le Dockerfile avec ENTRYPOINT, 
+mais ils seront remplacés par des arguments fournis au démarrage du conteneur.
+Exemple :
+ENTRYPOINT ["python", "app.py"]
+
+
+En résumé, CMD est utilisé pour définir une commande par défaut qui peut être remplacée au démarrage du conteneur, 
+tandis que ENTRYPOINT définit une commande principale qui sera toujours exécutée avec la possibilité d'ajouter des arguments au démarrage. 
+Ils peuvent également être combinés ensemble pour une utilisation plus avancée, 
+où CMD peut être utilisé pour fournir des arguments par défaut à ENTRYPOINT.
