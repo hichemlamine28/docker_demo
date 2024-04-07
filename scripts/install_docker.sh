@@ -20,6 +20,8 @@ sudo systemctl restart docker
 sudo systemctl enable docker
 sudo systemctl enable containerd.service
 docker --version
+
+# Allow to use docker without sudo without restart. This command must be used for each terminal
 newgrp docker
 
 # Install docker-compose
@@ -30,3 +32,10 @@ docker-compose --version
 curl -L https://github.com/docker/machine/releases/download/v0.16.2/docker-machine-`uname -s`-`uname -m` >/tmp/docker-machine && chmod +x /tmp/docker-machine && sudo cp /tmp/docker-machine /usr/local/bin/docker-machine
 
 
+cat << EOF >> ~/.bashrc
+if ! groups | grep -q '\bdocker\b'; then
+    newgrp docker
+fi
+EOF
+
+source ~/.bashrc
