@@ -1,0 +1,22 @@
+version: '3'
+services:
+  m-game-engine:
+    image: hichemlamine/m-game-engine:v1
+    ports:
+     - "60051:60051"
+  m-highscore:
+    image: hichemlamine/m-highscore:v1
+    ports:
+     - "50051:50051"
+  m-bff:
+    image: hichemlamine/m-bff:v1
+    entrypoint:
+    - ./binary
+    - --address-m-game-engine=m-game-engine:60051
+    - --address-m-highscore=m-highscore:50051
+    ports:
+     - "8081:8081"
+  m-frontend:
+    image: hichemlamine/m-frontend:v1
+    ports:
+     - "8086:80"
